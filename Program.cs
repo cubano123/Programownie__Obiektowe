@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Zadania0706
 {
@@ -240,8 +242,9 @@ namespace Zadania0706
                 else
                 {
                     NodeTest<T> node = _head;
-                    
-                    
+                    _head = _head.Next;
+
+
                     return node.Value;
                 }
             }
@@ -266,9 +269,22 @@ namespace Zadania0706
             public DateTime Birth { get; set; }
         }
 
+        public class StudentsComparer : EqualityComparer<Student>
+        {
+            public override bool Equals([AllowNull] Student x, [AllowNull] Student y)
+            {
+                return x.Pesel == y.Pesel;
+            }
+
+            public override int GetHashCode([DisallowNull] Student obj)
+            {
+                return int.Parse(obj.Pesel);
+            }
+        }
+
         public static ISet<Student> CreateStudentGroup(Student[] students)
         {
-            return new HashSet<Student>(students);
+            return new HashSet<Student>(students,new StudentsComparer());
         }
 
         /**
