@@ -4,7 +4,8 @@ using System.Text;
 
 namespace ConsoleApp20
 {
-    interface ITask
+    public interface ITask
     {
+        string Name { get; set; }
     }
 }
